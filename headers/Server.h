@@ -7,7 +7,7 @@
 #include <chrono>
 #include <thread>
 #include <string>
-#include <cstring>
+
 
 #include "Log.h"
 
@@ -21,22 +21,30 @@ struct Server{
 
 private:
         static const int __max_socket_queue = 1000;
-
+        static const int __max_workers_num = 100;
 
         void CreateSocket();
         void SetSocket();
         void BindSocket();
         void StartSockListen();
         void Listen();
+        void Answer();
 
-        Log* logger;
+        bool _running;
+        
         int _sockfd;
         uint16_t _port;
-        std::string _log_file_name;
-        std::chrono::time_point<std::chrono::system_clock> _start_time;
-        std::thread _listener_thread;
-        bool _running;
+        uint16_t _current_worker_num;
 
+        std::string _log_file_name;
+        Log* logger;
+        
+        std::chrono::time_point<std::chrono::system_clock> _start_time;
+        
+        
+        std::thread _listener_thread;
+        std::thread _workers[__max_workers_num];
+        
 };
 
 

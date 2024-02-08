@@ -1,12 +1,18 @@
 #include "../headers/Log.h"
+#include <cstring> 
 
 void Log::LogError(std::string e){
+    std::string errnos = "\n";
     if (!_log_stream.is_open())
         {
             std::cerr << "Can not log: logfile is closed!" << std::endl;
             return;
         }
-    _log_stream << '[' << return_current_time_and_date() << " ] " << e << std::endl; 
+        if (errno){
+            errnos += std::string(std::strerror(errno));
+            errno = 0;
+        }
+    _log_stream << '[' << return_current_time_and_date() << " ] " << e << errnos << std::endl; 
 }
 
 void Log::InitLogStream(){

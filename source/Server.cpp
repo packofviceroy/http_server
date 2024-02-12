@@ -68,10 +68,14 @@ void Server::Listen(){
       buffer[ret] = 0;
       inet_ntop(AF_INET, &(client_address.sin_addr), address_str, 20);
       active = true;
+      std::cout << "===========================" << std::endl;
       std::cout << "Message from: " << address_str << std::endl;
       std::cout << buffer << std::endl;
+      
       send(client_fd, "Hello world!", 13, 0);
-      std::cout << "Message sent ";
+      close(client_fd);
+      std::cout << std::endl << "Message sent!!!" << std::endl; 
+      std::cout << "===========================" << std::endl;
     }
 }
 

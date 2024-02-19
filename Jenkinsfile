@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Docker Test'){
             steps{
-                sh 'docker run simplehttpsserver/latest -p 8080:4337 -d'
+                sh 'docker run -d simplehttpsserver/latest -p 8080:4337'
             }
         }
     }

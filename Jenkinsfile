@@ -10,5 +10,10 @@ pipeline {
       	        sh 'docker build -t simplehttpsserver/latest .'
             }
         }
+        stage('Docker Test'){
+            steps{
+                sh 'docker run simplehttpsserver/latest -p 8080:4337 -d'
+            }
+        }
     }
 }
